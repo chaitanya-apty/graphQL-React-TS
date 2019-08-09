@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "paths": {
+            "*": [
+                "src/*"
+            ]
+        },
+        "types": [
+            "node",
+            "graphql"
+        ],
+        "allowJs": false,
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./build"
+    },
+    "include": [
+        "./src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

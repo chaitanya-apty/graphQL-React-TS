@@ -1,0 +1,47 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"    
+    ],
+    "rules": {
+        "no-unsafe-any": true,
+        "no-unused-expression": [true, "allow-fast-null-checks"],
+        "quotemark": [
+            true,
+            "single",
+            "avoid-escape"
+        ],
+        "no-unsafe-finally": true,
+        "no-use-before-declare": true,
+        "object-literal-sort-keys": false,
+        "ordered-imports": [
+            false
+          ],
+        "trailing-comma": [
+            false,
+            {
+                "multiline": "always",
+                "singleline": "never"
+            }
+        ],
+        "max-line-length": {
+            "options": [120]
+        },
+        "no-console": {
+            "severity": "warn",
+            "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+        },
+        "typedef": [
+            true,
+            "call-signature",
+            "property-declaration",
+        ]
+
+    },
+    "jsRules": {
+        "max-line-length": {
+            "options": [120]
+        }
+    }
+
+}
