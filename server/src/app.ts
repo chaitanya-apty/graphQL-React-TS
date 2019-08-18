@@ -1,11 +1,15 @@
 import { FastifyServer } from 'types/fastify';
 
+const serverCallback = (err: Error, address: string) => {
+    if (err) {
+        throw err;
+    };
+    return;
+}
+
 export default async (server: FastifyServer): Promise<void> => {
     try {
-        await server.listen(5000, (err: Error, address: string) => {
-            if (err) throw err;
-            return;
-        });
+        await server.listen(5000, serverCallback);
     } catch (err) {
         console.log(err);
         process.exit(1);
