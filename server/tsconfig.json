@@ -12,7 +12,7 @@
         },
         "types": [
             "node",
-            "graphql"
+            "graphql",
         ],
         "allowJs": false,
         "target": "es2016",

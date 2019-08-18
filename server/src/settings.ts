@@ -6,9 +6,9 @@ export const appSettings = (server: FastifyServer) => {
     
     // Error handler Listener
     server.setErrorHandler((error, request, reply) => {
-        var statusCode = error.statusCode >= 400 ? error.statusCode : 500
-        reply
-            .code(statusCode)
-            .send({ error: error.message, status: error.statusCode })
+        const statusCode = error.statusCode >= 400 ? error.statusCode : 500
+        reply.code(statusCode).send({ 
+            error: error.message, status: error.statusCode 
+        });
     })
 };

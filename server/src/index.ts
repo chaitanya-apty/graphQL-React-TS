@@ -1,13 +1,18 @@
 import * as fastify from 'fastify';
 import { appSettings } from './settings';
-import initializeApp from './app';
+import initialiseApp from './app';
 import initialiseRoutes from './routes';
+import initialiseDB from './backend';
+import env from './config';
 
+//SET ENV
+const MODE = process.env.NODE_ENV;
+const config = env(MODE);
 
 const server = fastify({logger: false});
 
 appSettings(server);
 initialiseRoutes(server);
 
-// App Initialise
-initializeApp(server);
+initialiseApp(server);
+initialiseDB(config.MONGO_URI);

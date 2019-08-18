@@ -1,7 +1,7 @@
 export const graphQlOptions = {
     prefix: '/graphql',
     graphql: {
-        schema: require('../schema/schema')
+        schema: require('./schema')
     }
 }
 
