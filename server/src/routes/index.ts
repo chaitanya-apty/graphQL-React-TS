@@ -1,6 +1,6 @@
-import { FastifyServer } from "types/fastify";
+import { FastifyServer } from 'types/fastify';
 import { graphqlFastify, graphiqlFastify } from 'fastify-graphql';
-import { graphiQlRedirect, graphQlOptions } from "../backend/graph-schema/graphql-options";
+import { graphiQlRedirect, graphQlOptions } from '../backend/graph-schema/graphql-options';
 
 export default function(server: FastifyServer): void {
     server.register(require('./ping/route'), {

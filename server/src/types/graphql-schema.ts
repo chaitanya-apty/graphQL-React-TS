@@ -1,20 +1,20 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList } from "graphql";
-import Location from "../backend/models/Location";
-import Employee from "../backend/models/Employee";
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList, GraphQLID } from 'graphql';
+import Location from '../backend/models/Location';
+import Employee from '../backend/models/Employee';
 
 export const EmployeeType = new GraphQLObjectType({
     name: 'Employees',
     fields: () => ({
-        id: { type: GraphQLInt },
+        id: { type: GraphQLID },
         name: { type: GraphQLString },
         age: { type: GraphQLInt },
-        password: {type: GraphQLString},
+        password: {type: GraphQLID},
         location: {
             type: LocationType,
-            async resolve(parent, args) {
+            async resolve(parent, args): Promise<unknown> {
                 return await Location.findOne({
-                    id: parent['location']
-                })
+                    id: parent.location
+                });
             }
         }
     })
@@ -23,14 +23,14 @@ export const EmployeeType = new GraphQLObjectType({
 export const LocationType = new GraphQLObjectType({
     name: 'Locations',
     fields: () => ({
-        id: { type: GraphQLInt },
+        id: { type: GraphQLID },
         name: { type: GraphQLString },
         pincode: { type: GraphQLInt },
         employees: {
             type: new GraphQLList(EmployeeType),
             async resolve(parent, args) {
                 return await Employee.find({
-                    location: parent['id']
+                    location: parent.id
                 });
             }
         }

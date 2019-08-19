@@ -1,5 +1,5 @@
-import { 
-    GraphQLObjectType, 
+import {
+    GraphQLObjectType,
     GraphQLSchema,
     GraphQLList,
     GraphQLID
@@ -19,8 +19,8 @@ const RootQuery = new GraphQLObjectType({
             },
             async resolve(parent, args) {
                 return await Employee.findOne({
-                    id: +args['id']
-                })
+                    id: args.id
+                });
             }
         },
         location: {
@@ -30,8 +30,8 @@ const RootQuery = new GraphQLObjectType({
             },
             async resolve(parent, args) {
                 return await Location.findOne({
-                    id: +args['id']
-                })
+                    id: args.id
+                });
             }
         },
         employees: {
@@ -52,4 +52,4 @@ const RootQuery = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
     query: RootQuery,
     mutation: Mutation
-})
+});

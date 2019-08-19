@@ -1,9 +1,8 @@
 import { model, Schema } from 'mongoose';
 
 const EmployeeScheme = new Schema({
-    id: Number,
     name: String,
-    location: Number,
+    location: String,
     age: Number,
     password: String
 });

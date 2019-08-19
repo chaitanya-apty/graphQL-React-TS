@@ -5,13 +5,13 @@ import initialiseRoutes from './routes';
 import initialiseDB from './backend';
 import env from './config';
 
-//SET ENV
+// SET ENV
 const MODE = process.env.NODE_ENV;
 const config = env(MODE);
 
 const server = fastify({logger: false});
 
-appSettings(server);
+appSettings(server, config);
 initialiseRoutes(server);
 
 initialiseApp(server);

@@ -1,4 +1,4 @@
-import { FastifyServer } from "types/fastify";
+import { FastifyServer } from 'types/fastify';
 import authHook from '../hooks/auth.hook';
 
 module.exports = function PingRoute(instance: FastifyServer, opts: unknown, done: (error?: Error) => void): void {
@@ -7,4 +7,4 @@ module.exports = function PingRoute(instance: FastifyServer, opts: unknown, done
         reply.send('Server Pinging @ 5000');
     });
     done();
-}
+};

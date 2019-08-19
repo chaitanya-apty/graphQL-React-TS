@@ -3,11 +3,11 @@ export const graphQlOptions = {
     graphql: {
         schema: require('./schema')
     }
-}
+};
 
 export const graphiQlRedirect = {
     prefix: '/graphiql',
     graphiql: {
         endpointURL: '/graphql',
     }
-}
+};

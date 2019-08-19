@@ -3,10 +3,10 @@ import { FastifyServer } from 'types/fastify';
 const serverCallback = (err: Error, address: string) => {
     if (err) {
         throw err;
-    };
+    }
     console.log('Server Started On =>' + address);
     return;
-}
+};
 
 export default async (server: FastifyServer): Promise<void> => {
     try {
