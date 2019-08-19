@@ -1,0 +1,10 @@
+{
+  "name": "ts-react-graphql-application",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "npm start --prefix server"
+  },
+  "dependencies": {}
+}

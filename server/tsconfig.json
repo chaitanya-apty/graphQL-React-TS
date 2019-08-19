@@ -12,13 +12,14 @@
         },
         "types": [
             "node",
-            "graphql"
+            "graphql",
         ],
         "allowJs": false,
         "target": "es2016",
         "module": "commonjs",
         "moduleResolution": "node",
-        "outDir": "./build"
+        "outDir": "./build",
+        "allowSyntheticDefaultImports": true
     },
     "include": [
         "./src/**/*.ts"
