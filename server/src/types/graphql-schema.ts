@@ -12,9 +12,7 @@ export const EmployeeType = new GraphQLObjectType({
         location: {
             type: LocationType,
             async resolve(parent, args): Promise<unknown> {
-                return await Location.findOne({
-                    id: parent.location
-                });
+                return await Location.findById(parent.location);
             }
         }
     })
@@ -28,7 +26,7 @@ export const LocationType = new GraphQLObjectType({
         pincode: { type: GraphQLInt },
         employees: {
             type: new GraphQLList(EmployeeType),
-            async resolve(parent, args) {
+            async resolve(parent, args): Promise<unknown> {
                 return await Employee.find({
                     location: parent.id
                 });

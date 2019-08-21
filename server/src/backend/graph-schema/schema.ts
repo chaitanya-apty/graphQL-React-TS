@@ -18,9 +18,7 @@ const RootQuery = new GraphQLObjectType({
                 id: { type: GraphQLID }
             },
             async resolve(parent, args) {
-                return await Employee.findOne({
-                    id: args.id
-                });
+                return await Employee.findById(args.id);
             }
         },
         location: {
@@ -29,9 +27,7 @@ const RootQuery = new GraphQLObjectType({
                 id: { type: GraphQLID }
             },
             async resolve(parent, args) {
-                return await Location.findOne({
-                    id: args.id
-                });
+                return await Location.findById(args.id);
             }
         },
         employees: {
@@ -43,7 +39,7 @@ const RootQuery = new GraphQLObjectType({
         locations: {
             type: new GraphQLList(LocationType),
             async resolve(parent, args) {
-                return await Location.find();
+               return await Location.find();
             }
         }
     }

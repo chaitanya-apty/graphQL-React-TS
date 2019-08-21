@@ -26,13 +26,21 @@ export const Mutation = new GraphQLObjectType({
         addLocation: {
             type: LocationType,
             args: {
-                id: { type: notNull(GraphQLID) },
                 name: { type: notNull(GraphQLString) },
                 pincode: { type: notNull(GraphQLInt) },
             },
             async resolve(source, args): Promise<Document> {
                 const location = new Location({ ...args });
                 return await location.save();
+            }
+        },
+        deleteEmployee: {
+            type: EmployeeType,
+            args : {
+                id: { type: notNull(GraphQLID)},
+            },
+            async resolve(source, args): Promise<Document> {
+                return await Employee.findByIdAndDelete(args.id);
             }
         }
     }

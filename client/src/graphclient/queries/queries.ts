@@ -3,8 +3,7 @@ import { gql } from 'apollo-boost';
 export const getLocationList = gql`{
     locations{
      id,
-     name,
-     pincode
+     name
     }
 }`;
 
@@ -12,27 +11,21 @@ export const getLocationList = gql`{
 export const getEmployeeList = gql` 
 { 
   employees{
+   id,
    name,
-   age,
-   location {
-     name,
-     pincode
-   }
+   age
   }
 }
 `;
 
-export const addEmployeeMutation = gql`
-  mutation(
-      $name: String!, $id: ID!, $location: ID!, $age: Int!
-    ) {
-      addEmployee(
-        id: $id,
-        name: $name, 
-        location: $location,
-        age: $age
-    ) {
-      name,
+export const getEmployeeDetails = gql`
+  query getEmployee($id: ID!) {
+    employee(id: $id) {
+      name
       age
+      location {
+        name
+      }
     }
-  }`;
+  }
+`;
