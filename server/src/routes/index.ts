@@ -1,10 +1,10 @@
-import { FastifyServer } from "types/fastify";
+import { FastifyServer } from 'types/fastify';
 import { graphqlFastify, graphiqlFastify } from 'fastify-graphql';
-import { graphiQlRedirect, graphQlOptions } from "../schema/graphql-options";
+import { graphiQlRedirect, graphQlOptions } from '../backend/graph-schema/graphql-options';
 
 export default function(server: FastifyServer): void {
     server.register(require('./ping/route'), {
-        prefix: '/rest/private'
+        prefix: '/private'
     });
 
     // GraphQl Schema
@@ -14,5 +14,5 @@ export default function(server: FastifyServer): void {
     // 404 Catcher
     server.setNotFoundHandler(function (request, reply) {
         reply.send(`Error 404 Occured ** ${request.raw.url} **`);
-    })
+    });
 }

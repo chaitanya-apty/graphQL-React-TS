@@ -4,7 +4,6 @@
         "tslint:recommended"    
     ],
     "rules": {
-        "no-unsafe-any": true,
         "no-unused-expression": [true, "allow-fast-null-checks"],
         "quotemark": [
             true,
@@ -34,7 +33,7 @@
         "typedef": [
             true,
             "call-signature",
-            "property-declaration",
+            "property-declaration"
         ]
 
     },

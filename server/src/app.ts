@@ -3,9 +3,10 @@ import { FastifyServer } from 'types/fastify';
 const serverCallback = (err: Error, address: string) => {
     if (err) {
         throw err;
-    };
+    }
+    console.log('Server Started On =>' + address);
     return;
-}
+};
 
 export default async (server: FastifyServer): Promise<void> => {
     try {
@@ -17,6 +18,10 @@ export default async (server: FastifyServer): Promise<void> => {
         process.on('uncaughtException', (error) => {
             console.error(error);
             process.exit(1);
+        });
+
+        process.on('unhandledRejection', (error) => {
+            console.error('App Error @', error);
         });
     }
 };
