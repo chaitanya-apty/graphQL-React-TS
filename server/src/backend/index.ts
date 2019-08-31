@@ -1,5 +1,7 @@
 import * as mongoose from 'mongoose';
+import * as fastifyPlugin from 'fastify-plugin';
 import { mongooseOptions } from '../utils/env-helpers';
+import { FastifyServer, IRouterOptions } from 'types/fastify';
 
 const MongoDBEvents = (db: mongoose.Connection) => {
     db.once('connected', () => {
@@ -13,13 +15,19 @@ const MongoDBEvents = (db: mongoose.Connection) => {
     });
 };
 
-export default async (uri: string) => {
+async function mongoConnect(instance: FastifyServer, options: IRouterOptions): Promise<void> {
     if (!mongoose.connection.readyState) {
         try {
+            const uri = options['url'];
+            delete options['url'];
             MongoDBEvents(mongoose.connection);
-            await mongoose.connect(uri, mongooseOptions);
+            const connection = await mongoose.connect(uri, mongooseOptions);
+            instance.decorate('mongo', connection);
+
         } catch (E) {
             throw new Error(E);
         }
     }
-};
+}
+
+export default fastifyPlugin(mongoConnect);

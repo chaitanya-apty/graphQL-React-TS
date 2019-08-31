@@ -13,6 +13,7 @@
         "no-unsafe-finally": true,
         "no-use-before-declare": true,
         "object-literal-sort-keys": false,
+        "no-string-literal": false,
         "ordered-imports": [
             false
           ],
