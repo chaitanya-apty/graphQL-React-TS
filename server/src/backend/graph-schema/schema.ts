@@ -32,7 +32,7 @@ const RootQuery = new GraphQLObjectType({
         },
         employees: {
             type: new GraphQLList(EmployeeType),
-            async resolve(parent, args) {
+            async resolve(parent, args, request) {
                 return await Employee.find();
             }
         },

@@ -5,9 +5,10 @@ export const graphQlOptions = {
     }
 };
 
+export const GRAPHIQL_ROUTE = '/graphiql';
 export const graphiQlRedirect = {
-    prefix: '/graphiql',
+    prefix: GRAPHIQL_ROUTE,
     graphiql: {
-        endpointURL: '/graphql',
+        endpointURL: '/private/graphql',
     }
 };
