@@ -10,7 +10,7 @@ const serverCallback = (err: Error, address: string) => {
 
 export default async (server: FastifyServer): Promise<void> => {
     try {
-        await server.listen(5000, serverCallback);
+        await server.listen(5000, '127.0.0.1',  serverCallback);
     } catch (err) {
         console.log(err);
         process.exit(1);

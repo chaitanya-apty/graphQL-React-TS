@@ -1,21 +1,21 @@
 import React, { useState, useEffect, memo } from 'react';
-import { graphql, compose } from 'react-apollo';
+import {useMutation, useQuery} from '@apollo/react-hooks';
+
 import { getLocationList, getEmployeeList } from '../../graphclient/queries/queries';
 import { addEmployeeMutation } from '../../graphclient/queries/mutations';
 
 import './create-employee.component.css';
+import equals from 'ramda/es/equals';
 
 interface Employee {
     name: string;
     age: number;
-    id: number;
     location: string;
 }
 
 const defaultDetails: Employee = {
     name: '',
     age: -1,
-    id: -1,
     location: ''
 };
 
@@ -23,34 +23,37 @@ const CreateEmployee: React.FC = (props: any): JSX.Element => {
     const [locations, setLocale] = useState([]);
     const [employee, setEmployee] = useState(defaultDetails);
 
+    const {data: qLocations} = useQuery(getLocationList);
+    const [addEmployee] = useMutation(addEmployeeMutation);
 
     useEffect(() => {
-        // One time Activity
-        const request = props.getLocationList;
-        if (request.locations) {
-            setLocale(request.locations.slice());
+        const locationsData = qLocations.locations; 
+        if (locationsData && !equals(locations, locationsData)) {
+            setLocale(locationsData.slice());
         }
-    }, [props.getLocationList]);
+    }, [qLocations, locations]);
 
-    const setEmployeeDetails = (key: keyof Employee, value: string | number) => {
+    
+    function setEmployeeDetails(key: keyof Employee, value: string | number): void {
         if (typeof value === 'string' && value.trim().length < 2) return;
+        
         setEmployee({
             ...employee,
             [key]: value
-        })
+        });
     }
 
-    const submitEmployeeDetails = function (e: any) {
+    function submitEmployeeDetails(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        props.addEmployeeMutation({
+        addEmployee({
             variables: {
                 ...employee
             },
             refetchQueries: [{
                 query: getEmployeeList
             }]
-        })
-        e.target.reset();
+        });
+        (e.target as HTMLFormElement).reset();
     }
 
     return (
@@ -74,17 +77,6 @@ const CreateEmployee: React.FC = (props: any): JSX.Element => {
                         className='w3-input w3-border w3-round'
                         onChange={(e) => setEmployeeDetails('age', +e.target.value)} />
                 </div>
-
-                <div className="field">
-                    <label>ID</label>
-                    <input
-                        required
-                        type="number"
-                        className='w3-input w3-border w3-round'
-                        max='999'
-                        onChange={(e) => setEmployeeDetails('id', +e.target.value)} />
-                </div>
-
                 <div className="field">
                     <label>Location:</label>
                     <select
@@ -110,7 +102,4 @@ const CreateEmployee: React.FC = (props: any): JSX.Element => {
     )
 }
 
-export default memo(compose(
-    graphql(getLocationList, { name: 'getLocationList' }),
-    graphql(addEmployeeMutation, { name: 'addEmployeeMutation' })
-)(CreateEmployee));
+export default memo(CreateEmployee);
