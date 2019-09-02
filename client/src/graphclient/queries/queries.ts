@@ -1,11 +1,13 @@
 import { gql } from 'apollo-boost';
 
-export const getLocationList = gql`{
+export const getLocationList = gql`
+{
     locations{
      id,
      name
     }
-}`;
+}
+`;
 
 
 export const getEmployeeList = gql` 
@@ -19,7 +21,7 @@ export const getEmployeeList = gql`
 `;
 
 export const getEmployeeDetails = gql`
-  query getEmployee($id: ID!) {
+  query ($id: ID!) {
     employee(id: $id) {
       name
       age

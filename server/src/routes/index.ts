@@ -9,10 +9,13 @@ export default function(server: FastifyServer): void {
 
     // GraphQl Schema
     server.register(graphqlFastify, graphQlOptions);
-    server.register(graphiqlFastify, graphiQlRedirect);
+    if (process.env.NODE_ENV === 'development') {
+        // DEV TOOL in Dev Mode
+        server.register(graphiqlFastify, graphiQlRedirect);
+    }
 
     // 404 Catcher
     server.setNotFoundHandler(function (request, reply) {
-        reply.send(`Error 404 Occured ** ${request.raw.url} **`);
+        reply.send(`** Error 404 Occured ** ${request.raw.url} **`);
     });
 }

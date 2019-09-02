@@ -1,60 +1,61 @@
 import React, { useState, useEffect, memo, Fragment } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { equals } from 'ramda';
 
 import './employee-list.css';
 import { getEmployeeList } from '../../graphclient/queries/queries';
-import { deleteEmployeeMutation } from '../../graphclient/queries/mutations';
 import { EmployeeDetails } from '../../common/types';
 import { NavLink } from 'react-router-dom';
+import { QueryResult } from '@apollo/react-common';
+import { deleteEmployeeMutation } from '../../graphclient/queries/mutations';
 
 const EmployeeListComponent: React.FC = (props: any): JSX.Element => {
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [employees, setData] = useState<Array<EmployeeDetails>>([]);
-  const [qError, setError] = useState<boolean>(false);
+  const [employees, setEmployees] = useState<Array<EmployeeDetails>>([]);
+  const [qError, setError] = useState<string>('');
 
-  // Delete Handler
+  //Employee Hooks
+  const employeesQData: QueryResult<{ employees: EmployeeDetails[] }> = useQuery(getEmployeeList, { displayName: 'EmployeeList' })
+  const [deleteEmployeeQ, { error: deleteError }] = useMutation(deleteEmployeeMutation);
+
+  //@Delete Effects
   useEffect(() => {
-    const request = props.deleteEmployeeMutationResult;
-    if (request && request.error && request.error !== qError) {
-      setError(!!request.error);
+    if (deleteError && !equals(qError, deleteError.message)) {
+      setError(deleteError.message);
     }
-  }, [props.deleteEmployeeMutationResult, qError]);
+  }, [deleteError, qError]);
 
-  // Employees Hooks
+  //@Employee Effects
   useEffect(() => {
-    const request = props.getEmployeeList;
-    if (request && request.loading === isLoading) {
-      return;
+    const { loading } = employeesQData;
+    if (!equals(loading, isLoading)) {
+      setLoading(loading);
     }
-    setLoading(request.loading);
-  }, [props.getEmployeeList, isLoading]);
+  }, [employeesQData, isLoading]);
 
   useEffect(() => {
-    const request = props.getEmployeeList;
-    if (request.employees && !equals(employees, request.employees)) {
-      setData([...request.employees]);
+    const { data } = employeesQData;
+    if (data && !equals(data.employees, employees)) {
+      setEmployees(data.employees);
     }
-  }, [props.getEmployeeList, employees])
+  }, [employeesQData, employees])
 
 
-  function deleteEmployee(index: number) {
+  async function deleteEmployee(index: number) {
     const id = employees[index].id;
-    props.deleteEmployeeMutation({
+    await deleteEmployeeQ({
       variables: {
         id
-      },
-      refetchQueries: [{
-        query: getEmployeeList
-      }]
-    })
+      }
+    });
+    await employeesQData.refetch();
   }
 
   return (
     <div className='emp__list'>
       {
         isLoading ? <div className='loader'></div> :
-            qError ? 'Failed to Delete ,Please Refresh' :
+          qError ? 'Failed to Delete ,Please Refresh' :
             <ul id='emp_list' className="w3-ul w3-hoverable">
               {
                 employees.length ? employees.map((emp: any, i: number) => {
@@ -75,7 +76,4 @@ const EmployeeListComponent: React.FC = (props: any): JSX.Element => {
   );
 }
 
-export default memo(compose(
-  graphql(getEmployeeList, { name: 'getEmployeeList' }),
-  graphql(deleteEmployeeMutation, { name: 'deleteEmployeeMutation' })
-)(EmployeeListComponent));
+export default memo(EmployeeListComponent);
