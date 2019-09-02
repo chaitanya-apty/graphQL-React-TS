@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 
-import { getLocationList, getEmployeeList } from '../../graphclient/queries/queries';
+import { getLocationList, getEmployeesList } from '../../graphclient/queries/queries';
 import { addEmployeeMutation } from '../../graphclient/queries/mutations';
 
 import './create-employee.component.css';
@@ -27,7 +27,7 @@ const CreateEmployee: React.FC = (props: any): JSX.Element => {
     const [addEmployee] = useMutation(addEmployeeMutation);
 
     useEffect(() => {
-        const locationsData = qLocations.locations; 
+        const locationsData = qLocations && qLocations.locations; 
         if (locationsData && !equals(locations, locationsData)) {
             setLocale(locationsData.slice());
         }
@@ -50,7 +50,7 @@ const CreateEmployee: React.FC = (props: any): JSX.Element => {
                 ...employee
             },
             refetchQueries: [{
-                query: getEmployeeList
+                query: getEmployeesList
             }]
         });
         (e.target as HTMLFormElement).reset();

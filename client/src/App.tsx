@@ -4,6 +4,8 @@ import EmployeeNavigatorComponent from './components/employee.navigator.componen
 import { Router, Route, Redirect, NavLink, Switch } from 'react-router-dom';
 import { memHistory } from './common/router-helpers/router';
 import EmployeeView from './components/employee-view/view.component';
+import PrivateRoute from './common/router-helpers/private-router/route';
+import Login from './components/login-component/login.component';
 
 function Header() {
   return (
@@ -27,9 +29,10 @@ const App: React.FC = (): JSX.Element => {
     <Router history={memHistory}>
       <Header />
       <Switch>
-        <Route exact path="/" render={() => (<Redirect to="/emp" />)} />
-        <Route exact path='/emp' component={EmployeeNavigatorComponent} />
-        <Route exact path="/emp/:id" component={EmployeeView} />
+        <PrivateRoute exact path="/" component={() => <Redirect to="/emp" />}/>
+        <Route exact path="/login" component={Login}/>
+        <PrivateRoute exact path='/emp' component={EmployeeNavigatorComponent} />
+        <PrivateRoute exact path="/emp/:id" component={EmployeeView} />
         <Route component={c404} />
       </Switch>
     </Router>

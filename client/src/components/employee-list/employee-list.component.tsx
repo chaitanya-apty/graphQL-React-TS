@@ -3,19 +3,21 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { equals } from 'ramda';
 
 import './employee-list.css';
-import { getEmployeeList } from '../../graphclient/queries/queries';
+import { getEmployeesList } from '../../graphclient/queries/queries';
 import { EmployeeDetails } from '../../common/types';
 import { NavLink } from 'react-router-dom';
-import { QueryResult } from '@apollo/react-common';
 import { deleteEmployeeMutation } from '../../graphclient/queries/mutations';
 
+interface EmployeeDetailsData {
+  employees: EmployeeDetails[];
+}
 const EmployeeListComponent: React.FC = (props: any): JSX.Element => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [employees, setEmployees] = useState<Array<EmployeeDetails>>([]);
   const [qError, setError] = useState<string>('');
 
   //Employee Hooks
-  const employeesQData: QueryResult<{ employees: EmployeeDetails[] }> = useQuery(getEmployeeList, { displayName: 'EmployeeList' })
+  const employeesQData = useQuery<EmployeeDetailsData>(getEmployeesList, { displayName: 'EmployeeList' })
   const [deleteEmployeeQ, { error: deleteError }] = useMutation(deleteEmployeeMutation);
 
   //@Delete Effects
@@ -35,7 +37,7 @@ const EmployeeListComponent: React.FC = (props: any): JSX.Element => {
 
   useEffect(() => {
     const { data } = employeesQData;
-    if (data && !equals(data.employees, employees)) {
+    if (data && Object.keys(data).length && !equals(data.employees, employees)) {
       setEmployees(data.employees);
     }
   }, [employeesQData, employees])
