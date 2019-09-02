@@ -10,7 +10,7 @@ export const getLocationList = gql`
 `;
 
 
-export const getEmployeeList = gql` 
+export const getEmployeesList = gql` 
 { 
   employees{
    id,
