@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLID, GraphQLScalarT
 import { EmployeeType, LocationType } from '../../types/graphql-schema';
 import Employee from '../../backend/models/Employee';
 import Location from '../../backend/models/Location';
-import { Document } from 'mongoose';
+import { Document, DocumentQuery } from 'mongoose';
 
 const isValid = (type: GraphQLScalarType) => new GraphQLNonNull(type);
 
@@ -28,7 +28,7 @@ export const Mutation = new GraphQLObjectType({
                 name: { type: isValid(GraphQLString) },
                 pincode: { type: isValid(GraphQLInt) },
             },
-            async resolve(source, args): Promise<Document> {
+            async resolve(source, args, context): Promise<Document> {
                 const location = new Location({ ...args });
                 return await location.save();
             }
@@ -38,8 +38,8 @@ export const Mutation = new GraphQLObjectType({
             args : {
                 id: { type: isValid(GraphQLID)},
             },
-            async resolve(source, args): Promise<Document> {
-                return await Employee.findByIdAndDelete(args.id);
+            resolve(source, args): DocumentQuery<Document, Document, {}> {
+                return Employee.findByIdAndDelete(args.id);
             }
         }
     }

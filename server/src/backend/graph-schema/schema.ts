@@ -17,8 +17,8 @@ const RootQuery = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID }
             },
-            async resolve(parent, args) {
-                return await Employee.findById(args.id);
+            resolve(parent, args) {
+                return Employee.findById(args.id);
             }
         },
         location: {
@@ -26,7 +26,7 @@ const RootQuery = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID }
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 return await Location.findById(args.id);
             }
         },
