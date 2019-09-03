@@ -17,7 +17,7 @@ const RootQuery = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID }
             },
-            resolve(parent, args) {
+            resolve(parent, args, context) {
                 return Employee.findById(args.id);
             }
         },
