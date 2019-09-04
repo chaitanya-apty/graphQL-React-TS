@@ -1,13 +1,6 @@
 export const graphQlOptions = {
-    prefix: '/graphql',
-    graphql: {
-        schema: require('./schema')
-    }
+  graphiql: process.env.NODE_ENV === 'development',
+  schema: require('./schema')
 };
 
-export const graphiQlRedirect = {
-    prefix: '/graphiql',
-    graphiql: {
-        endpointURL: '/graphql',
-    }
-};
+export const GRAPHIQL_ROUTE = '/graphiql';

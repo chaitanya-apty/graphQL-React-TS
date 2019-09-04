@@ -21,7 +21,7 @@ export const getEmployeesList = gql`
 `;
 
 export const getEmployeeDetails = gql`
-  query ($id: ID!) {
+  query($id: ID!) {
     employee(id: $id) {
       name
       age
@@ -31,3 +31,12 @@ export const getEmployeeDetails = gql`
     }
   }
 `;
+
+export const getUserDetails = gql`
+ query($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      username,
+      token
+    }
+ }
+`

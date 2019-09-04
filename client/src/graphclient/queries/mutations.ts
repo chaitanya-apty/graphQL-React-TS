@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 export const addEmployeeMutation = gql`
-  mutation( $name: String!, $location: ID!, $age: Int!) {
+  mutation($name: String!, $location: ID!, $age: Int!) {
       addEmployee(
         name: $name, 
         location: $location,

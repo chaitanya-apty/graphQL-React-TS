@@ -1,21 +1,11 @@
 import { FastifyServer } from 'types/fastify';
-import { graphqlFastify, graphiqlFastify } from 'fastify-graphql';
-import { graphiQlRedirect, graphQlOptions } from '../backend/graph-schema/graphql-options';
-
 export default function(server: FastifyServer): void {
-    server.register(require('./ping/route'), {
+    server.register(require('./graphql-routes/route'), {
         prefix: '/private'
     });
 
-    // GraphQl Schema
-    server.register(graphqlFastify, graphQlOptions);
-    if (process.env.NODE_ENV === 'development') {
-        // DEV TOOL in Dev Mode
-        server.register(graphiqlFastify, graphiQlRedirect);
-    }
-
     // 404 Catcher
-    server.setNotFoundHandler(function (request, reply) {
+    server.setNotFoundHandler((request, reply) => {
         reply.send(`** Error 404 Occured ** ${request.raw.url} **`);
     });
 }
