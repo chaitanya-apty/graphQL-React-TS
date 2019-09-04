@@ -5,8 +5,6 @@ import { CorsOptions } from './utils/env-helpers';
 export const appSettings = (server: FastifyServer, config: IConfig) => {
     server.use(require('cors')(CorsOptions(config)));
     server.register(require('fastify-formbody'));
-
-    // Auth Plugin
     server.register(require('fastify-jwt'), {
         secret: 'supersecret'
     });
