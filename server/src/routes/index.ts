@@ -1,9 +1,5 @@
 import { FastifyServer } from 'types/fastify';
 export default function(server: FastifyServer): void {
-    server.register(require('./login/route'), {
-        prefix: '/public'
-    });
-
     server.register(require('./graphql-routes/route'), {
         prefix: '/private'
     });

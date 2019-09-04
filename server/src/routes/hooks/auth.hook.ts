@@ -1,10 +1,14 @@
-import { FastifyServer, Request, Response } from '../../types/fastify';
-import { GRAPHIQL_ROUTE } from '../../backend/graph-schema/graphql-options';
+import { Request, Response } from '../../types/fastify';
+import { checkRequest } from '../../utils/env-helpers';
 
-export default function(instance: FastifyServer): void  {
-    instance.addHook('preParsing', async (req: Request, reply: Response, done: (err?: Error) => void) => {
+export default function(instance): void  {
+    instance.addHook('preParsing', async (req: Request, reply: Response) => {
         try {
-            await 1;
+            if (checkRequest(req.headers)) {
+              return; // @Chaitu will update later
+            }
+            const token = req.headers['authorization'];
+            await instance.jwt.verify(token);
           } catch (err) {
             reply.send(err);
           }

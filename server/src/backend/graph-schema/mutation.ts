@@ -35,8 +35,8 @@ export const Mutation = new GraphQLObjectType({
         },
         deleteEmployee: {
             type: EmployeeType,
-            args : {
-                id: { type: isValid(GraphQLID)},
+            args: {
+                id: { type: isValid(GraphQLID) },
             },
             resolve(source, args): DocumentQuery<Document, Document, {}> {
                 return Employee.findByIdAndDelete(args.id);

@@ -1,4 +1,5 @@
 import { MongoConnectOptions, IConfig } from 'types/common';
+import fastify = require('fastify');
 
 export const mongooseOptions: MongoConnectOptions = {
     useNewUrlParser: true,
@@ -11,3 +12,7 @@ export const CorsOptions = (config: IConfig) => ({
     optionsSuccessStatus: 200,
     methods: ['GET', 'PUT', 'POST', 'DELETE']
 });
+
+export const checkRequest = (headers: fastify.DefaultHeaders) => {
+    return headers['x-origin-request'].indexOf('login') > -1;
+};

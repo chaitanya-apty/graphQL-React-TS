@@ -1,4 +1,5 @@
 import { FastifyServer } from 'types/fastify';
+import fastify from 'fastify';
 
 const serverCallback = (err: Error, address: string) => {
     if (err) {

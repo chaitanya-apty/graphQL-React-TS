@@ -34,3 +34,12 @@ export const LocationType = new GraphQLObjectType({
         }
     })
 });
+
+export const User = new GraphQLObjectType({
+    name: 'User',
+    fields: () => ({
+        username: { type: GraphQLString },
+        password: { type: GraphQLString },
+        token: { type: GraphQLString },
+    })
+});
