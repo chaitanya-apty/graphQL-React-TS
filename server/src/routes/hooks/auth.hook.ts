@@ -1,10 +1,10 @@
 import { FastifyServer, Request, Response } from '../../types/fastify';
-import { GRAPHIQL_ROUTE } from '../../backend/graph-schema/graphql-options';
 
-export default function(instance: FastifyServer): void  {
-    instance.addHook('preParsing', async (req: Request, reply: Response, done: (err?: Error) => void) => {
+export default function(instance): void  {
+    instance.addHook('preParsing', async (req: Request, reply: Response) => {
         try {
-            await 1;
+            const token = req.headers['authorization'];
+            await instance.jwt.verify(token);
           } catch (err) {
             reply.send(err);
           }
