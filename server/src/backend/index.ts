@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 import * as fastifyPlugin from 'fastify-plugin';
 import { mongooseOptions } from '../utils/env-helpers';
 import { FastifyServer, IRouterOptions } from 'types/fastify';
+import { appErrors } from '../utils/errors/appErrors';
 
 const MongoDBEvents = (db: mongoose.Connection) => {
     db.once('connected', () => {
@@ -25,7 +26,7 @@ async function mongoConnect(instance: FastifyServer, options: IRouterOptions): P
             instance.decorate('mongo', connection);
 
         } catch (E) {
-            throw new Error(E);
+            throw appErrors.DATA_BASE_ERROR;
         }
     }
 }

@@ -55,10 +55,11 @@ const EmployeeView: React.FC = (props: any): JSX.Element => {
 
     useEffect(() => {
         const {data}  = gData;
-        if (data && !equals(employee, data.employee)) {
+        if (data && !equals(employee, data.employee) && !isLoading) {
+            console.log(data);
             setEmployee(data.employee as Employee)
         }
-    }, [gData, employee]);
+    }, [gData, employee, isLoading]);
 
 
     return (

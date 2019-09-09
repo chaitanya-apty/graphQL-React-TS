@@ -1,22 +1,27 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { getUserDetails } from '../../graphclient/queries/queries';
-import { memHistory } from '../../common/router-helpers/router';
-
 
 interface LoginState {
     username: string;
     password: string;
 }
 
-const defaultUserState: LoginState = {
-    username: '',
-    password: ''
-};
+interface QLoginResponse {
+    login : {
+        token: string;
+    }
+}
+
 
 const Login: React.FC = (props: any): JSX.Element => {
-  const [user, setLoginDetails] = useState(defaultUserState);
-  const [getUser, { loading, data }] = useLazyQuery(getUserDetails);
+  const [error, setError] = useState('');
+  const [getUser, { loading, data }] = useLazyQuery<QLoginResponse, LoginState>(getUserDetails, {
+      fetchPolicy: 'no-cache',
+      onError: ((er) => {
+          setError('UserName or Password Error');
+      })
+  });
 
   function loginUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,7 +30,7 @@ const Login: React.FC = (props: any): JSX.Element => {
        variables : {
            username: formData['username'].value,
            password: formData['password'].value
-       },
+       }
     });
   }
 
@@ -33,14 +38,11 @@ const Login: React.FC = (props: any): JSX.Element => {
     const authDetails = data && data['login'];
     if(!authDetails || !Object.keys(authDetails).length){ return; }
       localStorage.setItem("TOKEN", authDetails.token);
-      memHistory.push('/emp');
-   }, [data, loading])
+      props.history.push('/emp');
+   }, [data, loading, props.history])
 
-  useEffect(() => {
-
-  }, [loading,data])
   return (
-    <div className='create__employee'>
+    <div className=''>
             <form className='create-card w3-card w3-container w3-light-grey'
                 onSubmit={loginUser}>
                 <div className="field">
@@ -49,8 +51,7 @@ const Login: React.FC = (props: any): JSX.Element => {
                         required
                         name='username'
                         type="text"
-                        className='w3-input w3-border w3-round'
-                        onChange={(e) => setLoginDetails({...user, username: e.target.value})} />
+                        className='w3-input w3-border w3-round'/>
                 </div>
 
                 <div className="field">
@@ -59,14 +60,19 @@ const Login: React.FC = (props: any): JSX.Element => {
                         required
                         type="password"
                         name='password'
-                        className='w3-input w3-border w3-round'
-                        onChange={(e) => setLoginDetails({...user, password: e.target.value})} />
+                        className='w3-input w3-border w3-round'/>
                 </div>
                 <button
                     type='submit'
                     className='create-button w3-button w3-hover-orange w3-green'
                 >Login User</button>
             </form>
+               {error && <span 
+                 style={{
+                    color: 'red',
+                    position: 'absolute',
+                    left: '40em'
+                }}>{error}</span>}
         </div>
   );
 }

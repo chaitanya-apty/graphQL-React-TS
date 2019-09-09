@@ -1,4 +1,5 @@
 import { ConnectionOptions } from 'mongoose';
+import httpCodes from 'http-status-codes';
 
 export interface IConfig {
     MONGO_URI: string;
@@ -6,3 +7,9 @@ export interface IConfig {
 }
 
 export type MongoConnectOptions = ConnectionOptions;
+
+export interface IError {
+    errorCode: number;
+    message: string;
+    date?: Date;
+}

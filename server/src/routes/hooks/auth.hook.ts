@@ -1,16 +1,11 @@
-import { Request, Response } from '../../types/fastify';
-import { checkRequest } from '../../utils/env-helpers';
+import { Request, Response, FastifyServer } from '../../types/fastify';
 
 export default function(instance): void  {
-    instance.addHook('preParsing', async (req: Request, reply: Response) => {
+    instance.addHook('onRequest', async (req, reply: Response) => {
         try {
-            if (checkRequest(req.headers)) {
-              return; // @Chaitu will update later
-            }
-            const token = req.headers['authorization'];
-            await instance.jwt.verify(token);
+            await req.jwtVerify();
           } catch (err) {
-            reply.send(err);
+            req['user'] = null;
           }
     });
 }

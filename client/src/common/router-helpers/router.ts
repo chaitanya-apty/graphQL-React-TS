@@ -5,4 +5,4 @@ export const memHistory = createBrowserHistory({
     forceRefresh: false
 });
 
-export const Header = memHistory.location.pathname;
+export const CURRENT_PATH = memHistory.location.pathname;

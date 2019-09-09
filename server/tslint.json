@@ -32,7 +32,7 @@
             "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
         },
         "typedef": [
-            true,
+            false,
             "call-signature",
             "property-declaration"
         ]
