@@ -6,7 +6,7 @@ with a UI and backend layer
 ## Getting Started
 ### Stack:
 Front End: 
-React, Apollo Client
+React, Apollo Client  <br />
 Backend:
 Fastify, fastify-graphql
 
@@ -17,7 +17,7 @@ other than my IP Address (:P thats the reason ull find some secrets in code thou
 
 ### Installing
 Client:
-npm install && npm start
+npm install && npm start  <br />
 Server:
 npm install && npm start
 
