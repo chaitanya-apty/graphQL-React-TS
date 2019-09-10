@@ -3,7 +3,6 @@
 This is a Basic Web app which retrieves/create Employee Details
 which has a UI and backend layer
 
-## Getting Started
 ### Stack:
 #### Front End: 
 React, Apollo Client  <br />
