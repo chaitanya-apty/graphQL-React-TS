@@ -1,6 +1,6 @@
 # (Fastify with Graphql + React) Typescript
 
-This is a basic complete web app which retrieves/create Employee Details
+This is a Basic Web app which retrieves/create Employee Details
 with a UI and backend layer
 
 ## Getting Started
@@ -8,7 +8,7 @@ with a UI and backend layer
 #### Front End: 
 React, Apollo Client  <br />
 #### Backend:
-Fastify, fastify-graphql
+Fastify ❤️, fastify-graphql (I hate Express)
 
 ### Prerequisites
 Currently You can just pull this repo and can start the server,
