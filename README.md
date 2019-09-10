@@ -1,7 +1,7 @@
 # (Fastify with Graphql + React) Typescript
 
 This is a Basic Web app which retrieves/create Employee Details
-with a UI and backend layer
+which has a UI and backend layer
 
 ## Getting Started
 ### Stack:
